@@ -1,0 +1,47 @@
+[
+  {
+    "id": "device-001",
+    "domain": "network",
+    "data": { "encrypted_in_transit": true, "firmware_eol_date": "2027-06-01", "management_plane_public": false }
+  },
+  {
+    "id": "device-002",
+    "domain": "network",
+    "data": { "encrypted_in_transit": false, "firmware_eol_date": "2025-01-01", "management_plane_public": true }
+  },
+  {
+    "id": "device-003",
+    "domain": "network",
+    "data": { "encrypted_in_transit": true, "firmware_eol_date": "2026-09-01", "management_plane_public": false }
+  },
+  {
+    "id": "invoice-101",
+    "domain": "billing",
+    "data": { "metered_usage": 1000, "invoiced_usage": 1002 }
+  },
+  {
+    "id": "invoice-102",
+    "domain": "billing",
+    "data": { "metered_usage": 500, "invoiced_usage": 650 }
+  },
+  {
+    "id": "invoice-103",
+    "domain": "billing",
+    "data": { "metered_usage": -12, "invoiced_usage": 0 }
+  },
+  {
+    "id": "grant-201",
+    "domain": "access",
+    "data": { "role": "admin", "mfa_enabled": false, "last_used_date": "2026-08-01" }
+  },
+  {
+    "id": "grant-202",
+    "domain": "access",
+    "data": { "role": "editor", "mfa_enabled": true, "last_used_date": "2026-01-01" }
+  },
+  {
+    "id": "grant-203",
+    "domain": "access",
+    "data": { "role": "admin", "mfa_enabled": true, "last_used_date": "2026-11-10" }
+  }
+]

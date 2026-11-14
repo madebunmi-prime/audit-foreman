@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "audit-foreman"
+version = "0.1.0"
+description = "A multi-agent compliance auditing foreman: specialist agents check records against their domain's rules; the foreman surfaces only the findings that need a human's judgment call."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "langgraph>=1.0",
+    "langchain-core>=1.0",
+    "pydantic>=2.0",
+    "fastapi>=0.110",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "uvicorn[standard]>=0.30"]
+
+[project.scripts]
+audit-foreman = "audit_foreman.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["audit_foreman*"]
