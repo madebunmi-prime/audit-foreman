@@ -2,20 +2,25 @@
 
 from __future__ import annotations
 
+from html import escape
+
 from audit_foreman.models import AuditReport, Finding
 
 _SEVERITY_COLOR = {"info": "#34d399", "warning": "#fbbf24", "critical": "#f87171"}
 
 
 def _finding_row(f: Finding) -> str:
+    # record_id (and, in principle, any specialist-authored message) can carry
+    # attacker-controlled input from the audited records — escape everything
+    # before interpolating into HTML to avoid stored XSS.
     color = _SEVERITY_COLOR.get(f.severity.value, "#a79fe0")
     return f"""
     <tr>
-      <td><span class="sev" style="background:{color}22;color:{color}">{f.severity.value.upper()}</span></td>
-      <td class="mono">{f.specialist}</td>
-      <td class="mono">{f.rule_id}</td>
-      <td class="mono">{f.record_id}</td>
-      <td>{f.message}</td>
+      <td><span class="sev" style="background:{color}22;color:{color}">{escape(f.severity.value.upper())}</span></td>
+      <td class="mono">{escape(f.specialist)}</td>
+      <td class="mono">{escape(f.rule_id)}</td>
+      <td class="mono">{escape(f.record_id)}</td>
+      <td>{escape(f.message)}</td>
     </tr>"""
 
 

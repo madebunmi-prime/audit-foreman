@@ -26,3 +26,18 @@ def test_html_report_is_self_contained():
     html = render_html(report)
     assert "<style>" in html
     assert "http://" not in html and "https://" not in html
+
+
+def test_html_report_escapes_attacker_controlled_record_id():
+    records = [
+        Record(
+            id="<script>alert(1)</script>",
+            domain="network",
+            data={"encrypted_in_transit": False},
+        ),
+    ]
+    report = run_audit(records)
+    html = render_html(report)
+
+    assert "<script>alert(1)</script>" not in html
+    assert "&lt;script&gt;" in html
