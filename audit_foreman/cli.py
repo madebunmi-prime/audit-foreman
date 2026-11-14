@@ -6,6 +6,7 @@ import argparse
 import json
 import sys
 
+from audit_foreman.html_report import render_html
 from audit_foreman.models import Record
 from audit_foreman.orchestrator import run_audit
 
@@ -19,7 +20,11 @@ def main() -> None:
         "--input", required=True, help="Path to a JSON array of records."
     )
     run_parser.add_argument(
-        "--format", choices=["json", "markdown"], default="markdown"
+        "--format", choices=["json", "markdown", "html"], default="markdown"
+    )
+    run_parser.add_argument(
+        "--output",
+        help="Write the report to this file instead of stdout (required for --format html).",
     )
 
     args = parser.parse_args()
@@ -31,9 +36,17 @@ def main() -> None:
         report = run_audit(records)
 
         if args.format == "json":
-            print(report.model_dump_json(indent=2))
+            text = report.model_dump_json(indent=2)
+        elif args.format == "html":
+            text = render_html(report)
         else:
-            print(_as_markdown(report))
+            text = _as_markdown(report)
+
+        if args.output:
+            with open(args.output, "w") as f:
+                f.write(text)
+        else:
+            print(text)
 
 
 def _as_markdown(report) -> str:
